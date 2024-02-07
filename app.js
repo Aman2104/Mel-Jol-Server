@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-
+const User= require('./models/User')
 
 app.get('/', (req, res) => {
   res.send('Hey this is my API running 🥳')
