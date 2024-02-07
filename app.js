@@ -47,6 +47,10 @@ const connectMongo = async () => {
 }
 connectMongo()
 
+
+app.get('/', (req, res) => {
+  res.send('Hey this is my API running 🥳')
+})
 app.use('/api', userRoutes);
 app.use('/api/connection', connectionRoute);
 
