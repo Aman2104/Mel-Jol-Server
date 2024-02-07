@@ -18,18 +18,17 @@ const serviceAccount = JSON.parse(
 if (admin.apps.length === 0) {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
   });
 }
 
 
 
-const server = app.listen(3000);
-const io = require('socket.io')(server, {
-  cors: {
-    origin: '*'
-  }
-});
+// const server = app.listen(3000);
+// const io = require('socket.io')(server, {
+//   cors: {
+//     origin: '*'
+//   }
+// });
 
 
 
@@ -60,19 +59,19 @@ app.use('/api/connection', connectionRoute);
 
 
 
-io.on('connection', (socket) => {
+// io.on('connection', (socket) => {
 
-  console.log('A user connected', socket.user);
+//   console.log('A user connected', socket.user);
 
-  socket.on('message', (data) => {
-    saveMessageToDatabase(data);
-    io.emit('message', data);
-  });
+//   socket.on('message', (data) => {
+//     saveMessageToDatabase(data);
+//     io.emit('message', data);
+//   });
 
-  socket.on('disconnect', () => {
-    console.log('A user disconnected', socket.id);
-  });
-});
+//   socket.on('disconnect', () => {
+//     console.log('A user disconnected', socket.id);
+//   });
+// });
 
 
 
