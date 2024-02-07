@@ -37,9 +37,6 @@ const User = require('./models/User');
 app.use(express.json());
 app.use(cors());
 
-app.listen(3000, ()=>{
-  console.log("Testing");
-});
 
 
 app.get('/', (req, res) => {
@@ -48,6 +45,9 @@ app.get('/', (req, res) => {
 app.use('/api', userRoutes);
 app.use('/api/connection', connectionRoute);
 
+app.listen(3000, ()=>{
+  console.log("Testing");
+});
 
 
 
