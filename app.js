@@ -1,10 +1,8 @@
 const express = require('express');
+const connectToMongo = require('./db');
 const admin = require('firebase-admin')
 const cors = require('cors')
-const userRoutes = require('./routes/user');
-const connectionRoute = require('./routes/connect');
 require('dotenv').config()
-const connectToMongo = require('./db');
 connectToMongo()
 const app = express();
 
@@ -36,8 +34,8 @@ app.use(cors());
 app.get('/', (req, res) => {
   res.send('Hey this is my API running 🥳')
 })
-app.use('/api', userRoutes);
-app.use('/api/connection', connectionRoute);
+app.use('/api', require('./routes/user'));
+app.use('/api/connection', require('./routes/connect'));
 
 app.listen(3000, ()=>{
   console.log("Testing");
