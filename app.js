@@ -13,7 +13,7 @@ require('dotenv').config()
 
 
 const serviceAccount = JSON.parse(
-  process.env.FIREBASE_SERVICE_ACCOUNT_KEY 
+  process.env.FIREBASE_SERVICE_ACCOUNT_KEY
 );
 if (admin.apps.length === 0) {
   admin.initializeApp({
@@ -38,12 +38,16 @@ app.use(cors());
 
 
 const connectMongo = async () => {
-  try {
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log('connected');
-  } catch (error) {
-    console.log(error);
-  }
+  mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+    .then(() => {
+      console.log('Connected to MongoDB');
+    })
+    .catch((err) => {
+      console.error('Error connecting to MongoDB', err);
+    });
 }
 connectMongo()
 
@@ -115,7 +119,7 @@ app.post('/sendNotification', async (req, res) => {
       },
       data: {
         receiverId: id,
-        code:code,
+        code: code,
         navigationTarget: 'VideoCall',
       }
     };
