@@ -34,5 +34,5 @@ const connectionSchema = new mongoose.Schema({
     ],
 });
 
-const Connect = mongoose.model('Connection', connectionSchema);
-module.exports= Connect
+module.exports = mongoose.model('Connection', connectionSchema);
+// module.exports= Connect
