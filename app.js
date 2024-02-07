@@ -1,11 +1,13 @@
 const express = require('express');
-const mongoose = require('mongoose');
+const connectToMongo = require('./db');
 const admin = require('firebase-admin')
 const cors = require('cors')
 const userRoutes = require('./routes/user');
 const connectionRoute = require('./routes/connect');
 const Connection = require('./models/Connect');
 
+
+connectToMongo()
 const app = express();
 const User = require('./models/User');
 require('dotenv').config()
@@ -30,25 +32,12 @@ require('dotenv').config()
 //   }
 // });
 
-
-
 app.use(express.json());
 app.use(cors());
 
-
-const connectMongo = async () => {
-  mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-    .then(() => {
-      console.log('Connected to MongoDB');
-    })
-    .catch((err) => {
-      console.error('Error connecting to MongoDB', err);
-    });
-}
-connectMongo()
+app.listen(3000, ()=>{
+  console.log("Testing");
+});
 
 
 app.get('/', (req, res) => {
@@ -58,7 +47,6 @@ app.use('/api', userRoutes);
 app.use('/api/connection', connectionRoute);
 
 
-app.listen(3000);
 
 
 // io.on('connection', (socket) => {
