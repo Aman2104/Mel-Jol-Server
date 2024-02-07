@@ -4,9 +4,6 @@ const router = express.Router();
 const User = require('../models/User');
 
 
-router.get('/', async(req, res)=>{
-  res.send({msg:"Working"})
-})
 
 router.post('/newuser/details', async (req, res) => {
   const { uid, name, email, age, height, gender, imageUrl, fcmToken } = req.body;
