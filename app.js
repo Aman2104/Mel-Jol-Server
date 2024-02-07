@@ -5,7 +5,20 @@ const cors = require('cors')
 require('dotenv').config()
 connectToMongo()
 const app = express();
+app.use(express.json());
+app.use(cors());
 
+
+
+app.get('/', (req, res) => {
+  res.send('Hey this is my API running 🥳')
+})
+app.use('/api', require('./routes/user'));
+app.use('/api/connection', require('./routes/connect'));
+
+app.listen(3000, ()=>{
+  console.log("Testing");
+});
 
 
 // const serviceAccount = JSON.parse(
@@ -26,20 +39,7 @@ const app = express();
 //   }
 // });
 
-app.use(express.json());
-app.use(cors());
 
-
-
-app.get('/', (req, res) => {
-  res.send('Hey this is my API running 🥳')
-})
-app.use('/api', require('./routes/user'));
-app.use('/api/connection', require('./routes/connect'));
-
-app.listen(3000, ()=>{
-  console.log("Testing");
-});
 
 
 
