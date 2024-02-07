@@ -3,16 +3,10 @@ const admin = require('firebase-admin')
 const cors = require('cors')
 const userRoutes = require('./routes/user');
 const connectionRoute = require('./routes/connect');
-const Connection = require('./models/Connect');
 require('dotenv').config()
-
-
 const connectToMongo = require('./db');
-
-
 connectToMongo()
 const app = express();
-const User = require('./models/User');
 
 
 
