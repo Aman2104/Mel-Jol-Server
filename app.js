@@ -12,18 +12,18 @@ require('dotenv').config()
 
 
 
-const serviceAccount = JSON.parse(
-  process.env.FIREBASE_SERVICE_ACCOUNT_KEY
-);
-if (admin.apps.length === 0) {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-  });
-}
+// const serviceAccount = JSON.parse(
+//   process.env.FIREBASE_SERVICE_ACCOUNT_KEY
+// );
+// if (admin.apps.length === 0) {
+//   admin.initializeApp({
+//     credential: admin.credential.cert(serviceAccount),
+//   });
+// }
 
 
 
-app.listen(3000);
+
 // const io = require('socket.io')(server, {
 //   cors: {
 //     origin: '*'
@@ -57,6 +57,8 @@ app.get('/', (req, res) => {
 app.use('/api', userRoutes);
 app.use('/api/connection', connectionRoute);
 
+
+app.listen(3000);
 
 
 // io.on('connection', (socket) => {
