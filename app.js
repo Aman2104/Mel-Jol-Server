@@ -7,13 +7,20 @@ const connectionRoute = require('./routes/connect');
 const Connection = require('./models/Connect');
 
 const app = express();
-const serviceAccount = require('./google-services.json');
 const User = require('./models/User');
 require('dotenv').config()
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+
+
+const serviceAccount = JSON.parse(
+  process.env.FIREBASE_SERVICE_ACCOUNT_KEY 
+);
+if (admin.apps.length === 0) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
+  });
+}
 
 
 
