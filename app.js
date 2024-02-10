@@ -8,7 +8,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const User= require('./models/User')
+const User = require('./models/User')
+const Connection = require('./models/Connect')
 
 app.get('/', (req, res) => {
   res.send('Hey this is my API running 🥳')
@@ -16,19 +17,13 @@ app.get('/', (req, res) => {
 app.use('/api', require('./routes/user'));
 app.use('/api/connection', require('./routes/connect'));
 
-// app.listen(3000, ()=>{
-//   console.log("Testing");
-// });
-
-
 const serviceAccount = JSON.parse(
   process.env.FIREBASE_SERVICE_ACCOUNT_KEY
 );
-if (admin.apps.length === 0) {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-  });
-}
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
 
 
 
@@ -95,7 +90,7 @@ app.post('/sendNotification', async (req, res) => {
       return res.status(404).send('User not found');
     }
     const payload = {
-      tokens: [user.fcmToken],
+      token: user.fcmToken,
       notification: {
         title: 'Basic Notification',
         body: 'This is a basic notification sent from the server!',
@@ -106,9 +101,20 @@ app.post('/sendNotification', async (req, res) => {
         navigationTarget: 'VideoCall',
       }
     };
-    const response = await admin.messaging().sendMulticast(payload);
+    const response = await admin.messaging().send({
+      token: user.fcmToken,
+      notification: {
+        title: 'Basic Notification',
+        body: 'This is a basic notification sent from the server!',
+      },
+      data: {
+        receiverId: id,
+        code: code,
+        navigationTarget: 'VideoCall',
+      }
+    });
 
-    console.log('Successfully sent multicast notification:', response);
+    console.log('Successfully sent multicast notification:', response.responses);
     res.status(200).send('Multicast notification sent successfully');
   } catch (error) {
     console.error('Error sending multicast notification:', error);

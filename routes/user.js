@@ -1,4 +1,3 @@
-// userRoutes.js
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
@@ -98,10 +97,9 @@ router.post('/sendNotification', async (req, res) => {
     }
 
     console.log(user);
-    const response = await admin.messaging().sendMulticast({
-      tokens: [
-        user.fcmToken,
-      ],
+
+    const response = await admin.messaging().send({
+      token: user.fcmToken,
       notification: {
         title: 'Basic Notification',
         body: 'This is a basic notification sent from the server!',

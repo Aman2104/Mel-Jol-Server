@@ -31,6 +31,16 @@ router.post('/createconnection', async (req, res) => {
                 { _id: userB, matchedUser: { $ne: userA } }, 
                 { $push: { matchedUser: userA } }
             );
+            await Connection.updateOne(
+                { _id: connectionRequestAtoB._id },
+                { $set: { connected: true } }
+            );
+            await Connection.updateOne(
+                { _id: connectionRequestBtoA._id },
+                { $set: { connected: true } }
+            );
+
+
 
             res.status(201).json({ message: 'It\'s a Match.' });
         } else {
