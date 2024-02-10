@@ -54,8 +54,9 @@ router.post('/createconnection', async (req, res) => {
 
 router.get('/connected-data/:userA', async (req, res) => {
     const { userA } = req.params;
+    
     try {
-        const connectedDataForUserA = await Connection.find({ currentUser: userA, connected: true }).populate('requestUser', 'name');
+        const connectedDataForUserA = await Connection.find({ currentUser: userA, connected: true }).populate('requestUser', 'name imageUrl');
         res.status(200).json(connectedDataForUserA);
     } catch (error) {
         res.status(500).json({ message: 'Internal Server Error' });
